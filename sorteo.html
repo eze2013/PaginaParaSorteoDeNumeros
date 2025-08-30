@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Sorteo de Números</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: url(./SORTEO.jpg);
+      background-repeat: no-repeat;
+      background-size: cover;
+      color: darkorange;
+      font-size: 30px;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 450px;
+      background: rgba(180, 180, 180, 0.433);
+      padding: 50px;
+      border: 1px solid black;
+      border-radius: 10px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    #resultado {
+      margin-top: 20px;
+      font-size: 1.2em;
+      text-align: center;
+    }
+    h1{
+      text-align: center;
+      color: black;
+      font-size: 45px;
+      border: 0.5px dashed darkblue;
+      font-style: italic;
+    }
+    label{
+      font-size: 20px;
+      color: blue;
+      text-align: center;
+      font-style: italic;
+    }
+    input{
+      border: 0.3px dashed darkblue;
+      background-color: rgba(180, 180, 180, 0.433);
+      color: black;
+      font-size: 20px;
+    }
+    button{
+      background-color: darkgreen;
+      border: 0.3px dashed black;
+      color: white;
+    }
+    button:hover{
+      background-color: yellow;
+      color: black;
+      transform: scale(1.1);
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>¡SORTEO DE NUMEROS!</h1>
+    <label for="total">Cantidad total de números:</label>
+    <input type="number" id="total" min="1" placeholder="Ej: 100">
+
+    <label for="ganadores">Cantidad de números ganadores:</label>
+    <input type="number" id="ganadores" min="1" placeholder="Ej: 5">
+
+    <button onclick="sortear()">SORTEAR</button>
+
+    <div id="resultado"></div>
+  </div>
+
+  <script>
+    function sortear() {
+      const total = parseInt(document.getElementById("total").value);
+      const ganadores = parseInt(document.getElementById("ganadores").value);
+      const resultadoDiv = document.getElementById("resultado");
+
+      if (isNaN(total) || isNaN(ganadores) || total < 1 || ganadores < 1 || ganadores > total) {
+        resultadoDiv.innerHTML = "Por favor, ingresa valores válidos.";
+        return;
+      }
+
+      let numeros = [];
+      for (let i = 1; i <= total; i++) {
+        numeros.push(i);
+      }
+
+      // Mezcla aleatoria
+      for (let i = numeros.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [numeros[i], numeros[j]] = [numeros[j], numeros[i]];
+      }
+
+      const ganadoresSeleccionados = numeros.slice(0, ganadores);
+      resultadoDiv.innerHTML = "NUMEROS GANADORES: <strong>" + ganadoresSeleccionados.join(", ") + "</strong>" + " ¡FELICITACIONES!";
+    }
+  </script>
+</body>
+</html>
